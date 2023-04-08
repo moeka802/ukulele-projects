@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ウクレレアプリ</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>表示したいコードの押さえるフレットの位置を指定してください。</h1>
+        <div class="chord-nums-input">
+          <button type="button">0</button>
+          <button type="button">0</button>
+          <button type="button">0</button>
+          <button type="button">3</button>
+        </div>
+        <div class="fretboard">
+          <div class="fretboard-fretnums">
+            <div v-for="fretNum in fretNums" class="fretnum">{{ fretNum }}</div>
+          </div>
+          <div class="fretboard-row">
+            <div
+              v-for="note in firstStringNotes"
+              class="fret"
+              @click="displayNoteName(note)"
+            >
+              {{ note }}
+            </div>
+          </div>
+          <div class="fretboard-row">
+            <div
+              v-for="note in secondStringNotes"
+              class="fret"
+              @click="displayNoteName(note)"
+            >
+              {{ note }}
+            </div>
+          </div>
+          <div class="fretboard-row">
+            <div
+              v-for="note in thirdStringNotes"
+              class="fret"
+              @click="displayNoteName(note)"
+            >
+              {{ note }}
+            </div>
+          </div>
+          <div class="fretboard-row">
+            <div
+              v-for="note in fourthStringNotes"
+              class="fret"
+              @click="displayNoteName(note)"
+            >
+              {{ note }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script setup>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            fretNums: [],
+            firstStringNotes: [
+              "A",
+              "B♭",
+              "B",
+              "C",
+              "D♭",
+              "D",
+              "E♭",
+              "E",
+              "F",
+              "G♭",
+              "G",
+              "A♭",
+              "A",
+            ],
+            secondStringNotes: [
+              "E",
+              "F",
+              "G♭",
+              "G",
+              "A♭",
+              "A",
+              "B♭",
+              "B",
+              "C",
+              "D♭",
+              "D",
+              "E♭",
+              "E",
+            ],
+            thirdStringNotes: [
+              "C",
+              "D♭",
+              "D",
+              "E♭",
+              "E",
+              "F",
+              "G♭",
+              "G",
+              "A♭",
+              "A",
+              "B♭",
+              "B",
+              "C",
+            ],
+            fourthStringNotes: [
+              "G",
+              "A♭",
+              "A",
+              "B♭",
+              "B",
+              "C",
+              "D♭",
+              "D",
+              "E♭",
+              "E",
+              "F",
+              "G♭",
+              "G",
+            ],
+          };
+        },
+        mounted() {
+          this.fretNums = Array.from(new Array(13)).map((_, i) => i);
+        },
+        methods: {
+          displayNoteName(noteName) {
+            console.log(noteName);
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
