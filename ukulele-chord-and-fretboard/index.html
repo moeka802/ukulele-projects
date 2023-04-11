@@ -12,11 +12,21 @@
     <div id="app">
       <div class="container">
         <h1>表示したいコードの押さえるフレットの位置を指定してください。</h1>
-        <div class="chord-nums-input">
-          <button type="button">0</button>
-          <button type="button">0</button>
-          <button type="button">0</button>
-          <button type="button">3</button>
+        <div class="chordNumsContainer">
+          <div
+            v-for="(position, i) in stringPressingPositions"
+            class="chordNumContainer"
+          >
+            <div
+              class="triangle topTriangle"
+              @click="incrementPosition(i, position)"
+            ></div>
+            <div
+              class="triangle downTriangle"
+              @click="decrementPosition(i, position)"
+            ></div>
+            <div class="chordNum">{{ position }}</div>
+          </div>
         </div>
         <div class="fretboard">
           <div class="fretboard-fretnums">
@@ -25,37 +35,41 @@
           <div class="fretboard-row">
             <div
               v-for="note in firstStringNotes"
-              class="fret"
+              class="fret firstString"
+              :class="{ active: note.isActive }"
               @click="displayNoteName(note)"
             >
-              {{ note }}
+              {{ note.name }}
             </div>
           </div>
           <div class="fretboard-row">
             <div
               v-for="note in secondStringNotes"
-              class="fret"
+              class="fret secondString"
+              :class="{ active: note.isActive }"
               @click="displayNoteName(note)"
             >
-              {{ note }}
+              {{ note.name }}
             </div>
           </div>
           <div class="fretboard-row">
             <div
               v-for="note in thirdStringNotes"
-              class="fret"
+              class="fret thirdString"
+              :class="{ active: note.isActive }"
               @click="displayNoteName(note)"
             >
-              {{ note }}
+              {{ note.name }}
             </div>
           </div>
           <div class="fretboard-row">
             <div
               v-for="note in fourthStringNotes"
-              class="fret"
+              class="fret fourthString"
+              :class="{ active: note.isActive }"
               @click="displayNoteName(note)"
             >
-              {{ note }}
+              {{ note.name }}
             </div>
           </div>
         </div>
@@ -67,66 +81,67 @@
       createApp({
         data() {
           return {
+            stringPressingPositions: [0, 0, 0, 0],
             fretNums: [],
             firstStringNotes: [
-              "A",
-              "B♭",
-              "B",
-              "C",
-              "D♭",
-              "D",
-              "E♭",
-              "E",
-              "F",
-              "G♭",
-              "G",
-              "A♭",
-              "A",
+              { name: "A", isActive: true },
+              { name: "B♭", isActive: false },
+              { name: "B", isActive: false },
+              { name: "C", isActive: false },
+              { name: "D♭", isActive: false },
+              { name: "D", isActive: false },
+              { name: "E♭", isActive: false },
+              { name: "E", isActive: false },
+              { name: "F", isActive: false },
+              { name: "G♭", isActive: false },
+              { name: "G", isActive: false },
+              { name: "A♭", isActive: false },
+              { name: "A", isActive: false },
             ],
             secondStringNotes: [
-              "E",
-              "F",
-              "G♭",
-              "G",
-              "A♭",
-              "A",
-              "B♭",
-              "B",
-              "C",
-              "D♭",
-              "D",
-              "E♭",
-              "E",
+              { name: "E", isActive: true },
+              { name: "F", isActive: false },
+              { name: "G♭", isActive: false },
+              { name: "G", isActive: false },
+              { name: "A♭", isActive: false },
+              { name: "A", isActive: false },
+              { name: "B♭", isActive: false },
+              { name: "B", isActive: false },
+              { name: "C", isActive: false },
+              { name: "D♭", isActive: false },
+              { name: "D", isActive: false },
+              { name: "E♭", isActive: false },
+              { name: "E", isActive: false },
             ],
             thirdStringNotes: [
-              "C",
-              "D♭",
-              "D",
-              "E♭",
-              "E",
-              "F",
-              "G♭",
-              "G",
-              "A♭",
-              "A",
-              "B♭",
-              "B",
-              "C",
+              { name: "C", isActive: true },
+              { name: "D♭", isActive: false },
+              { name: "D", isActive: false },
+              { name: "E♭", isActive: false },
+              { name: "E", isActive: false },
+              { name: "F", isActive: false },
+              { name: "G♭", isActive: false },
+              { name: "G", isActive: false },
+              { name: "A♭", isActive: false },
+              { name: "A", isActive: false },
+              { name: "B♭", isActive: false },
+              { name: "B", isActive: false },
+              { name: "C", isActive: false },
             ],
             fourthStringNotes: [
-              "G",
-              "A♭",
-              "A",
-              "B♭",
-              "B",
-              "C",
-              "D♭",
-              "D",
-              "E♭",
-              "E",
-              "F",
-              "G♭",
-              "G",
+              { name: "G", isActive: true },
+              { name: "A♭", isActive: false },
+              { name: "A", isActive: false },
+              { name: "B♭", isActive: false },
+              { name: "B", isActive: false },
+              { name: "C", isActive: false },
+              { name: "D♭", isActive: false },
+              { name: "D", isActive: false },
+              { name: "E♭", isActive: false },
+              { name: "E", isActive: false },
+              { name: "F", isActive: false },
+              { name: "G♭", isActive: false },
+              { name: "G", isActive: false },
             ],
           };
         },
@@ -136,6 +151,38 @@
         methods: {
           displayNoteName(noteName) {
             console.log(noteName);
+          },
+          incrementPosition(string, currentPosition) {
+            const newPosition = currentPosition + 1;
+            if (newPosition > 12) return;
+            this.stringPressingPositions[string] = newPosition;
+
+            this.updateActiveNotes();
+          },
+          decrementPosition(string, currentPosition) {
+            const newPosition = currentPosition - 1;
+            if (newPosition < 0) return;
+            this.stringPressingPositions[string] = newPosition;
+
+            this.updateActiveNotes();
+          },
+          updateActiveNotes() {
+            this.firstStringNotes.forEach((note) => (note.isActive = false));
+            this.secondStringNotes.forEach((note) => (note.isActive = false));
+            this.thirdStringNotes.forEach((note) => (note.isActive = false));
+            this.fourthStringNotes.forEach((note) => (note.isActive = false));
+            this.firstStringNotes[
+              this.stringPressingPositions[0]
+            ].isActive = true;
+            this.secondStringNotes[
+              this.stringPressingPositions[1]
+            ].isActive = true;
+            this.thirdStringNotes[
+              this.stringPressingPositions[2]
+            ].isActive = true;
+            this.fourthStringNotes[
+              this.stringPressingPositions[3]
+            ].isActive = true;
           },
         },
       }).mount("#app");
