@@ -11,9 +11,6 @@
 import { defineComponent } from "vue";
 import Fret from "./components/FretComponent.vue";
 const NOTES = [
-  { name: "A" },
-  { name: "B♭" },
-  { name: "B" },
   { name: "C" },
   { name: "D♭" },
   { name: "D" },
@@ -26,54 +23,6 @@ const NOTES = [
   { name: "A" },
   { name: "B♭" },
   { name: "B" },
-
-  { name: "E" },
-  { name: "F" },
-  { name: "G♭" },
-  { name: "G" },
-  { name: "A♭" },
-  { name: "A" },
-  { name: "B♭" },
-  { name: "B" },
-  { name: "C" },
-  { name: "D♭" },
-  { name: "D" },
-  { name: "E♭" },
-  { name: "E" },
-  { name: "F" },
-  { name: "G♭" },
-
-  { name: "C" },
-  { name: "D♭" },
-  { name: "D" },
-  { name: "E♭" },
-  { name: "E" },
-  { name: "F" },
-  { name: "G♭" },
-  { name: "G" },
-  { name: "A♭" },
-  { name: "A" },
-  { name: "B♭" },
-  { name: "B" },
-  { name: "C" },
-  { name: "D♭" },
-  { name: "D" },
-
-  { name: "G" },
-  { name: "A♭" },
-  { name: "A" },
-  { name: "B♭" },
-  { name: "B" },
-  { name: "C" },
-  { name: "D♭" },
-  { name: "D" },
-  { name: "E♭" },
-  { name: "E" },
-  { name: "F" },
-  { name: "G♭" },
-  { name: "G" },
-  { name: "A♭" },
-  { name: "A" },
 ];
 
 export default defineComponent({
@@ -88,7 +37,15 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.notes = NOTES.map((note) => {
+    const A_STRINGS_NOTES = NOTES.slice(9, 12).concat(NOTES.slice(0, 12));
+    const E_STRINGS_NOTES = NOTES.slice(4, 12).concat(NOTES.slice(0, 7));
+    const C_STRINGS_NOTES = NOTES.slice(0, 12).concat(NOTES.slice(0, 3));
+    const G_STRINGS_NOTES = NOTES.slice(7, 12).concat(NOTES.slice(0, 10));
+
+    const ENTIRE_NOTES = A_STRINGS_NOTES.concat(E_STRINGS_NOTES)
+      .concat(C_STRINGS_NOTES)
+      .concat(G_STRINGS_NOTES);
+    this.notes = ENTIRE_NOTES.map((note) => {
       if (["C", "D", "E", "F", "G", "A", "B"].includes(note.name)) {
         return {
           ...note,
