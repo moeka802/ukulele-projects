@@ -1,0 +1,36 @@
+:root {
+  --shadow-color: #00ffaa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #112323;
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+ul.notes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 400px;
+  flex-wrap: wrap;
+}
+
+li {
+  height: 100px;
+  width: 100px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-shadow: 0 0 10px var(--shadow-color), 0 0 20px var(--shadow-color),
+    0 0 40px var(--shadow-color), 0 0 80px var(--shadow-color),
+    0 0 120px var(--shadow-color);
+}
